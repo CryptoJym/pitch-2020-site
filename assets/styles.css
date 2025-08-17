@@ -60,38 +60,9 @@ h2, h3, h4 { font-weight: 600; }
 
 .progress-bar { height: 3px; background: linear-gradient(90deg, var(--brand), var(--brand-2)); width: 0%; transition: width 120ms ease-out; }
 
-.layout { display: grid; grid-template-columns: 280px 1fr; gap: 24px; max-width: 1200px; margin: 28px auto; padding: 0 20px; }
+.layout { display: block; max-width: 1200px; margin: 28px auto; padding: 0 20px; }
 
-.toc { position: sticky; top: 84px; height: calc(100dvh - 120px); overflow: auto; background: var(--panel); border: 1px solid color-mix(in oklab, var(--panel), black 10%); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); }
-.toc h3 { margin: 6px 0 12px; font-size: 0.95rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
-
-/* TOC header with close button */
-.toc-header { 
-  display: flex; 
-  justify-content: space-between; 
-  align-items: center; 
-  margin-bottom: 12px;
-}
-
-.toc-close { 
-  display: none; 
-  appearance: none; 
-  border: none; 
-  background: none; 
-  color: var(--muted); 
-  font-size: 28px; 
-  cursor: pointer; 
-  padding: 0 8px;
-  line-height: 1;
-}
-
-.toc-close:hover { color: var(--text); }
-.toc nav ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
-.toc nav a { text-decoration: none; color: var(--text); opacity: 0.9; border-radius: 8px; padding: 6px 8px; display: block; }
-.toc nav a:hover { background: color-mix(in oklab, var(--panel), var(--brand) 12%); }
-.toc nav a.active { background: color-mix(in oklab, var(--panel), var(--brand) 20%); }
-.toc .level-2 { padding-left: 10px; opacity: 0.9; }
-.toc .level-3 { padding-left: 20px; opacity: 0.8; }
+/* TOC removed for better content visibility */
 
 .main { min-width: 0; }
 .content {
@@ -143,8 +114,6 @@ h2, h3, h4 { font-weight: 600; }
 /* Mobile layout */
 @media (max-width: 960px) {
   .layout { 
-    grid-template-columns: 1fr; 
-    gap: 16px; 
     margin: 16px auto;
     padding: 0 12px;
   }
@@ -162,55 +131,6 @@ h2, h3, h4 { font-weight: 600; }
     white-space: nowrap;
   }
   
-  /* Make ToC a fullscreen overlay on mobile */
-  .toc { 
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    height: 100%;
-    display: none;
-    z-index: 999;
-    margin: 0;
-    border-radius: 0;
-    background: var(--panel);
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    padding: 20px;
-  }
-  
-  .toc.open { 
-    display: block;
-    animation: slideIn 0.3s ease-out;
-  }
-  
-  /* Show close button on mobile */
-  .toc-close {
-    display: block;
-  }
-  
-  /* Add backdrop for mobile TOC */
-  .toc.open::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: -1;
-  }
-  
-  .toc nav ul {
-    gap: 12px;
-  }
-  
-  .toc nav a {
-    padding: 12px 16px;
-    font-size: 1.05rem;
-  }
-  
   /* Mobile content adjustments */
   .content {
     padding: 20px 16px;
@@ -219,12 +139,6 @@ h2, h3, h4 { font-weight: 600; }
   
   .content > * {
     max-width: 100%;
-  }
-  
-  /* Better touch targets */
-  .icon-button {
-    padding: 10px 14px;
-    font-size: 1.1rem;
   }
   
   /* Footer spacing */
@@ -269,17 +183,7 @@ h2, h3, h4 { font-weight: 600; }
   }
 }
 
-/* Animation for mobile TOC */
-@keyframes slideIn {
-  from {
-    transform: translateX(-100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
+/* TOC animations removed */
 
 /* Accessibility & polish */
 :target { scroll-margin-top: 84px; }

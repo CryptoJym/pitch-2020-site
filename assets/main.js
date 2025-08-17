@@ -18,12 +18,7 @@ function createUniqueSlugGenerator() {
   };
 }
 
-function setTocOpen(open) {
-  const toc = document.getElementById("toc");
-  const button = document.getElementById("tocToggle");
-  toc.classList.toggle("open", open);
-  button.setAttribute("aria-expanded", String(open));
-}
+// TOC functionality removed
 
 async function loadVerbatimContent() {
   const contentContainer = document.getElementById("content");
@@ -55,8 +50,6 @@ async function loadVerbatimContent() {
 
 function enhanceDocument() {
   const contentContainer = document.getElementById("content");
-  const tocContainer = document.getElementById("toc");
-  const mqlMobile = window.matchMedia("(max-width: 960px)");
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const toUnique = createUniqueSlugGenerator();
@@ -64,6 +57,7 @@ function enhanceDocument() {
     contentContainer.querySelectorAll("h1, h2, h3")
   );
 
+  // Add IDs to headings for anchor links
   headings.forEach((heading) => {
     if (!heading.id) {
       const base = slugify(heading.textContent || "section");
@@ -71,42 +65,7 @@ function enhanceDocument() {
     }
   });
 
-  const toc = document.createElement("nav");
-  const list = document.createElement("ul");
-
-  headings.forEach((heading) => {
-    const level = Number(heading.tagName.substring(1));
-    const li = document.createElement("li");
-    li.className = `level-${level}`;
-
-    const a = document.createElement("a");
-    a.href = `#${heading.id}`;
-    a.textContent = heading.textContent || "Section";
-
-    li.appendChild(a);
-    list.appendChild(li);
-  });
-
-  const title = document.createElement("h3");
-  title.textContent = "Contents";
-  
-  // Add close button for mobile
-  const closeButton = document.createElement("button");
-  closeButton.className = "toc-close";
-  closeButton.innerHTML = "×";
-  closeButton.setAttribute("aria-label", "Close table of contents");
-  closeButton.addEventListener("click", () => setTocOpen(false));
-  
-  const header = document.createElement("div");
-  header.className = "toc-header";
-  header.appendChild(title);
-  header.appendChild(closeButton);
-  
-  toc.appendChild(header);
-  toc.appendChild(list);
-  tocContainer.innerHTML = "";
-  tocContainer.appendChild(toc);
-
+  // Smooth scrolling for anchor links
   const smoothBehavior = prefersReducedMotion ? "auto" : "smooth";
   document.querySelectorAll('a[href^="#"]').forEach((link) => {
     link.addEventListener("click", (e) => {
@@ -118,36 +77,8 @@ function enhanceDocument() {
       target.scrollIntoView({ behavior: smoothBehavior, block: "start" });
       history.replaceState(null, "", id);
       target.focus({ preventScroll: true });
-      if (mqlMobile.matches) setTocOpen(false);
     });
   });
-
-  tocContainer.addEventListener("click", (e) => {
-    const anchor = e.target.closest('a[href^="#"]');
-    if (!anchor) return;
-    if (mqlMobile.matches) setTocOpen(false);
-  });
-
-  try {
-    const tocLinksById = new Map(
-      Array.from(toc.querySelectorAll("a")).map((a) => [a.getAttribute("href").slice(1), a])
-    );
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const id = entry.target.id;
-          const link = tocLinksById.get(id);
-          if (!link) return;
-          if (entry.isIntersecting) {
-            toc.querySelectorAll("a.active").forEach((el) => el.classList.remove("active"));
-            link.classList.add("active");
-          }
-        });
-      },
-      { rootMargin: "-40% 0px -55% 0px", threshold: [0, 1] }
-    );
-    headings.forEach((h) => observer.observe(h));
-  } catch {}
 }
 
 function setupProgressBar() {
@@ -165,29 +96,9 @@ function setupProgressBar() {
   update();
 }
 
-function setupTocToggle() {
-  const button = document.getElementById("tocToggle");
-  const toc = document.getElementById("toc");
-  const mqlMobile = window.matchMedia("(max-width: 960px)");
-  button.addEventListener("click", () => {
-    const isOpen = toc.classList.contains("open");
-    setTocOpen(!isOpen);
-  });
-  window.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") setTocOpen(false);
-  });
-  document.addEventListener("click", (e) => {
-    if (!mqlMobile.matches) return;
-    if (!toc.classList.contains("open")) return;
-    const target = e.target;
-    if (toc.contains(target)) return;
-    if (button.contains(target)) return;
-    setTocOpen(false);
-  });
-}
+// TOC toggle removed
 
 window.addEventListener("DOMContentLoaded", async () => {
   setupProgressBar();
-  setupTocToggle();
   await loadVerbatimContent();
 });
