@@ -48,6 +48,15 @@
           </svg>
           <span>Deep Dive</span>
         </button>
+        <button class="view-toggle" data-view="rollout">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M2 10h16M10 2v16" stroke="currentColor" stroke-width="2"/>
+            <circle cx="6" cy="10" r="2" fill="currentColor"/>
+            <circle cx="10" cy="6" r="2" fill="currentColor"/>
+            <circle cx="14" cy="14" r="2" fill="currentColor"/>
+          </svg>
+          <span>Rollout</span>
+        </button>
       </nav>
     </div>
     <div id="progressBar" class="progress-bar" aria-hidden="true"></div>
@@ -204,6 +213,228 @@
         </div>
       </div>
     </main>
+  </section>
+  
+  <!-- Phased Rollout Section -->
+  <section id="rollout-section" class="view-section">
+    <div class="rollout-container">
+      <!-- Perspective Header -->
+      <div class="perspective-header">
+        <h2 class="rollout-title">Phased Rollout Strategy</h2>
+        <div class="perspective-notice">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M12 9v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          <p>This analysis is based on current visibility from hiring data, public information, and operational patterns. Additional insights may emerge with deeper access.</p>
+        </div>
+      </div>
+      
+      <!-- Data Sources -->
+      <div class="data-sources">
+        <h3>How We Know What We Know</h3>
+        <div class="source-cards">
+          <div class="source-card">
+            <div class="source-icon">📋</div>
+            <h4>Hiring Applications</h4>
+            <p>Analysis of 500+ job postings revealed operational scale and role distributions</p>
+            <div class="source-detail">~$35-45/hr field reps × 40hrs/week</div>
+          </div>
+          <div class="source-card">
+            <div class="source-icon">🏪</div>
+            <h4>Retail Footprint</h4>
+            <p>Public store location data mapped to territory assignments</p>
+            <div class="source-detail">1,200+ Best Buy, Target locations</div>
+          </div>
+          <div class="source-card">
+            <div class="source-icon">📊</div>
+            <h4>Industry Benchmarks</h4>
+            <p>Standard ratios for field marketing operations</p>
+            <div class="source-detail">1:15 manager to rep ratio typical</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Phase Timeline -->
+      <div class="phase-timeline">
+        <h3>Implementation Phases</h3>
+        <div class="phases">
+          <div class="phase" data-phase="1">
+            <div class="phase-header">
+              <span class="phase-number">Phase 1</span>
+              <span class="phase-duration">Days 0-45</span>
+            </div>
+            <h4>Samsung Pilot</h4>
+            <div class="phase-details">
+              <div class="assumption-box">
+                <strong>Assumptions:</strong>
+                <ul>
+                  <li>200 field reps (from job posting volume)</li>
+                  <li>15 managers (using 1:15 ratio)</li>
+                  <li>$40/hr average fully loaded cost</li>
+                </ul>
+              </div>
+              <div class="financial-impact">
+                <div class="impact-item">
+                  <span class="label">Current Annual Cost:</span>
+                  <span class="value">$17.2M</span>
+                </div>
+                <div class="impact-item">
+                  <span class="label">AI Automation (80%):</span>
+                  <span class="value">-$13.8M</span>
+                </div>
+                <div class="impact-item saved">
+                  <span class="label">Phase 1 Savings:</span>
+                  <span class="value">$13.8M/year</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="phase" data-phase="2">
+            <div class="phase-header">
+              <span class="phase-number">Phase 2</span>
+              <span class="phase-duration">Days 46-90</span>
+            </div>
+            <h4>Meta & Chromebook</h4>
+            <div class="phase-details">
+              <div class="assumption-box">
+                <strong>Assumptions:</strong>
+                <ul>
+                  <li>150 Meta ambassadors (experiential focus)</li>
+                  <li>100 Chromebook specialists</li>
+                  <li>Different automation rates (60% vs 80%)</li>
+                </ul>
+              </div>
+              <div class="financial-impact">
+                <div class="impact-item">
+                  <span class="label">Combined Annual Cost:</span>
+                  <span class="value">$10.4M</span>
+                </div>
+                <div class="impact-item">
+                  <span class="label">Weighted Automation:</span>
+                  <span class="value">-$7.3M</span>
+                </div>
+                <div class="impact-item saved">
+                  <span class="label">Phase 2 Savings:</span>
+                  <span class="value">$7.3M/year</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="phase" data-phase="3">
+            <div class="phase-header">
+              <span class="phase-number">Phase 3</span>
+              <span class="phase-duration">Days 91-180</span>
+            </div>
+            <h4>Full Deployment</h4>
+            <div class="phase-details">
+              <div class="assumption-box">
+                <strong>What We Don't Know Yet:</strong>
+                <ul>
+                  <li>Actual headcount by program</li>
+                  <li>Seasonal variation impact</li>
+                  <li>Client-specific automation limits</li>
+                </ul>
+              </div>
+              <div class="financial-impact">
+                <div class="impact-item">
+                  <span class="label">Projected Total:</span>
+                  <span class="value">$45M cost base</span>
+                </div>
+                <div class="impact-item">
+                  <span class="label">Conservative Automation:</span>
+                  <span class="value">-$25M</span>
+                </div>
+                <div class="impact-item saved">
+                  <span class="label">Total Potential:</span>
+                  <span class="value">$25M+/year</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Financial Calculator -->
+      <div class="financial-calculator">
+        <h3>Adjust Our Assumptions</h3>
+        <p class="calc-intro">See how different assumptions change the ROI:</p>
+        
+        <div class="calculator-controls">
+          <div class="calc-input">
+            <label>Average Hourly Rate</label>
+            <input type="range" id="hourlyRate" min="30" max="50" value="40" step="1">
+            <span class="calc-value">$<span id="hourlyValue">40</span>/hr</span>
+          </div>
+          
+          <div class="calc-input">
+            <label>Total Field Force Size</label>
+            <input type="range" id="fieldForce" min="500" max="2000" value="1000" step="50">
+            <span class="calc-value"><span id="forceValue">1000</span> reps</span>
+          </div>
+          
+          <div class="calc-input">
+            <label>Automation Rate</label>
+            <input type="range" id="automationRate" min="50" max="90" value="70" step="5">
+            <span class="calc-value"><span id="automationValue">70</span>%</span>
+          </div>
+        </div>
+        
+        <div class="calc-results">
+          <div class="result-card">
+            <h4>Annual Cost Base</h4>
+            <div class="result-value" id="costBase">$83.2M</div>
+          </div>
+          <div class="result-card">
+            <h4>Automation Savings</h4>
+            <div class="result-value saved" id="savings">$58.2M</div>
+          </div>
+          <div class="result-card">
+            <h4>ROI Timeline</h4>
+            <div class="result-value" id="roiTime">2.3 months</div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Unknowns and Opportunities -->
+      <div class="unknowns-section">
+        <h3>What Could Change Everything</h3>
+        <div class="unknown-cards">
+          <div class="unknown-card opportunity">
+            <h4>Hidden Opportunities</h4>
+            <ul>
+              <li>Client direct billing relationships</li>
+              <li>Data monetization potential</li>
+              <li>New market expansion</li>
+              <li>Platform licensing to competitors</li>
+            </ul>
+          </div>
+          <div class="unknown-card risk">
+            <h4>Potential Blockers</h4>
+            <ul>
+              <li>Client contract restrictions</li>
+              <li>Union considerations</li>
+              <li>Regulatory compliance</li>
+              <li>Technology adoption curve</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Bottom Line -->
+      <div class="bottom-line">
+        <h3>The Bottom Line</h3>
+        <p>Based on observable data, we project <strong>$25-30M annual savings</strong> with 70-80% process automation. With full visibility, this could be <strong>significantly higher</strong> or reveal constraints we haven't considered.</p>
+        <div class="confidence-meter">
+          <label>Confidence Level</label>
+          <div class="meter">
+            <div class="meter-fill" style="width: 65%"></div>
+          </div>
+          <span>65% - Based on public data</span>
+        </div>
+      </div>
+    </div>
   </section>
   
   <!-- Floating Navigation Helper -->

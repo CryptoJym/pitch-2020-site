@@ -19,10 +19,15 @@ function switchView(viewName) {
   
   // Show/hide navigation helper based on view
   const navHelper = document.getElementById('navHelper');
-  if (viewName === 'detail') {
+  if (viewName === 'detail' || viewName === 'rollout') {
     navHelper.classList.add('visible');
   } else {
     navHelper.classList.remove('visible');
+  }
+  
+  // Setup calculator if on rollout view
+  if (viewName === 'rollout') {
+    setupFinancialCalculator();
   }
   
   // Scroll to top smoothly
@@ -272,6 +277,60 @@ function setupHeaderScroll() {
 
     lastScroll = currentScroll;
   }, { passive: true });
+}
+
+// Financial Calculator Setup
+function setupFinancialCalculator() {
+  const hourlyRateInput = document.getElementById('hourlyRate');
+  const fieldForceInput = document.getElementById('fieldForce');
+  const automationRateInput = document.getElementById('automationRate');
+  
+  const hourlyValue = document.getElementById('hourlyValue');
+  const forceValue = document.getElementById('forceValue');
+  const automationValue = document.getElementById('automationValue');
+  
+  const costBaseEl = document.getElementById('costBase');
+  const savingsEl = document.getElementById('savings');
+  const roiTimeEl = document.getElementById('roiTime');
+  
+  function updateCalculations() {
+    const hourlyRate = parseInt(hourlyRateInput.value);
+    const fieldForce = parseInt(fieldForceInput.value);
+    const automationRate = parseInt(automationRateInput.value) / 100;
+    
+    // Update display values
+    hourlyValue.textContent = hourlyRate;
+    forceValue.textContent = fieldForce;
+    automationValue.textContent = (automationRate * 100).toFixed(0);
+    
+    // Calculate annual cost base (40 hours/week * 52 weeks)
+    const annualHours = 40 * 52;
+    const annualCostPerRep = hourlyRate * annualHours;
+    const totalCostBase = (fieldForce * annualCostPerRep) / 1000000; // Convert to millions
+    
+    // Calculate savings
+    const annualSavings = totalCostBase * automationRate;
+    
+    // Calculate ROI timeline (assuming $5M implementation cost)
+    const implementationCost = 5; // $5M
+    const monthlyROI = (annualSavings / 12);
+    const roiMonths = implementationCost / monthlyROI;
+    
+    // Update display
+    costBaseEl.textContent = `$${totalCostBase.toFixed(1)}M`;
+    savingsEl.textContent = `$${annualSavings.toFixed(1)}M`;
+    roiTimeEl.textContent = `${roiMonths.toFixed(1)} months`;
+  }
+  
+  // Add event listeners
+  if (hourlyRateInput && fieldForceInput && automationRateInput) {
+    hourlyRateInput.addEventListener('input', updateCalculations);
+    fieldForceInput.addEventListener('input', updateCalculations);
+    automationRateInput.addEventListener('input', updateCalculations);
+    
+    // Initial calculation
+    updateCalculations();
+  }
 }
 
 // Initialize everything
