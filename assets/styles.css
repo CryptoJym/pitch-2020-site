@@ -94,10 +94,58 @@ body {
 .header-inner {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 1.5rem 2rem;
+  padding: 1rem 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+/* Navigation */
+.header-nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.view-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.view-toggle:hover {
+  color: var(--text-primary);
+  background: rgba(91, 95, 255, 0.1);
+}
+
+.view-toggle.active {
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  background: rgba(91, 95, 255, 0.1);
+}
+
+.view-toggle svg {
+  width: 20px;
+  height: 20px;
+}
+
+.view-toggle span {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .view-toggle span {
+    display: inline;
+  }
 }
 
 .brand {
@@ -458,4 +506,291 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent-secondary);
+}
+
+/* View Sections */
+.view-section {
+  display: none;
+  min-height: 100vh;
+  padding-top: 5rem;
+}
+
+.view-section.active {
+  display: block;
+}
+
+/* 50K Overview */
+.overview-hero {
+  padding: 3rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.overview-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 900;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.overview-subtitle {
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.key-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.metric-card {
+  background: var(--surface);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  text-align: center;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-5px);
+}
+
+.metric-value {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--accent-primary);
+  margin-bottom: 0.5rem;
+}
+
+.metric-label {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Journey Timeline */
+.overview-map h3 {
+  text-align: center;
+  margin-bottom: 3rem;
+  font-size: 2rem;
+}
+
+.journey-timeline {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  position: relative;
+}
+
+.journey-node {
+  text-align: center;
+  padding: 2rem;
+  background: var(--surface);
+  border-radius: var(--border-radius);
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.journey-node:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(91, 95, 255, 0.2);
+}
+
+.node-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.node-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.node-detail {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+/* Story Mode */
+.story-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.story-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.story-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.story-intro {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+}
+
+.story-chapters {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.story-chapter {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2rem;
+  padding: 2rem;
+  background: var(--surface);
+  border-radius: var(--border-radius);
+  position: relative;
+  overflow: hidden;
+}
+
+.chapter-number {
+  font-size: 4rem;
+  font-weight: 900;
+  color: var(--accent-primary);
+  opacity: 0.2;
+  line-height: 1;
+}
+
+.chapter-content h3 {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+}
+
+.insight-box {
+  background: rgba(91, 95, 255, 0.1);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-top: 1.5rem;
+  border-left: 4px solid var(--accent-primary);
+}
+
+/* Detail Panels */
+.detail-panels {
+  max-width: 900px;
+  margin: 3rem auto;
+  padding: 0 2rem;
+}
+
+.detail-panel {
+  margin-bottom: 1rem;
+  background: var(--surface);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.panel-trigger {
+  width: 100%;
+  padding: 1.5rem 2rem;
+  background: none;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  color: var(--text-primary);
+  font-size: 1.125rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.panel-trigger:hover {
+  background: rgba(91, 95, 255, 0.05);
+}
+
+.panel-arrow {
+  transition: transform 0.3s ease;
+}
+
+.detail-panel.expanded .panel-arrow {
+  transform: rotate(180deg);
+}
+
+.panel-content {
+  display: none;
+  padding: 0 2rem 2rem;
+}
+
+.detail-panel.expanded .panel-content {
+  display: block;
+}
+
+/* Navigation Helper */
+.nav-helper {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 0.3s ease;
+}
+
+.nav-helper.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.nav-helper-btn {
+  width: 48px;
+  height: 48px;
+  background: var(--surface);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  color: var(--accent-primary);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.nav-helper-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 10px 30px rgba(91, 95, 255, 0.3);
+}
+
+.nav-helper-btn .tooltip {
+  position: absolute;
+  left: 60px;
+  background: var(--surface);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  white-space: nowrap;
+  font-size: 0.875rem;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+}
+
+.nav-helper-btn:hover .tooltip {
+  opacity: 1;
+  transform: translateX(0);
 }

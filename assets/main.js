@@ -1,4 +1,55 @@
-// Premium Interactive Experience
+// Enhanced Interactive Experience with Navigation
+let currentView = 'overview';
+
+// View Management
+function switchView(viewName) {
+  // Update view sections
+  document.querySelectorAll('.view-section').forEach(section => {
+    section.classList.remove('active');
+  });
+  document.getElementById(`${viewName}-section`).classList.add('active');
+  
+  // Update navigation buttons
+  document.querySelectorAll('.view-toggle').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  document.querySelector(`[data-view="${viewName}"]`).classList.add('active');
+  
+  currentView = viewName;
+  
+  // Show/hide navigation helper based on view
+  const navHelper = document.getElementById('navHelper');
+  if (viewName === 'detail') {
+    navHelper.classList.add('visible');
+  } else {
+    navHelper.classList.remove('visible');
+  }
+  
+  // Scroll to top smoothly
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
+
+// Setup View Navigation
+function setupViewNavigation() {
+  document.querySelectorAll('.view-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const view = btn.getAttribute('data-view');
+      switchView(view);
+    });
+  });
+  
+  // Journey node clicks
+  document.querySelectorAll('.journey-node').forEach(node => {
+    node.addEventListener('click', () => {
+      switchView('story');
+    });
+  });
+}
+
+// Enhanced Content Loading
 async function loadContent() {
   const contentContainer = document.getElementById('content');
   const brandTitle = document.getElementById('brandTitle');
@@ -23,16 +74,44 @@ async function loadContent() {
     const firstHeading = contentContainer.querySelector('h1, h2, h3');
     if (firstHeading) {
       const titleText = firstHeading.textContent?.trim() || '2020 Master Pitch';
-      document.title = titleText;
+      document.title = titleText + ' - AI Takeover Strategy';
       brandTitle.textContent = titleText;
     }
 
     // Enhance the loaded content
     enhanceContent();
+    setupDetailPanels();
   } catch (error) {
     console.error('Error loading content:', error);
     contentContainer.innerHTML = '<p>Error loading content. Please refresh the page.</p>';
   }
+}
+
+// Setup Expandable Detail Panels
+function setupDetailPanels() {
+  document.querySelectorAll('.panel-trigger').forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const panel = trigger.closest('.detail-panel');
+      panel.classList.toggle('expanded');
+    });
+  });
+}
+
+// Navigation Helper Actions
+function setupNavHelper() {
+  document.querySelectorAll('.nav-helper-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const action = btn.getAttribute('data-action');
+      
+      if (action === 'overview') {
+        switchView('overview');
+      } else if (action === 'expand') {
+        document.querySelectorAll('.detail-panel').forEach(panel => {
+          panel.classList.add('expanded');
+        });
+      }
+    });
+  });
 }
 
 function enhanceContent() {
@@ -71,13 +150,29 @@ function enhanceContent() {
     });
   }, observerOptions);
 
-  // Observe all content elements
-  document.querySelectorAll('.content-wrapper h2, .content-wrapper h3, .content-wrapper p, .content-wrapper blockquote, .content-wrapper img').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    observer.observe(el);
-  });
+  // Observe different elements based on current view
+  if (currentView === 'overview') {
+    document.querySelectorAll('.metric-card, .journey-node').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+  } else if (currentView === 'story') {
+    document.querySelectorAll('.story-chapter').forEach((el, index) => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = `opacity 0.6s ease ${index * 0.2}s, transform 0.6s ease ${index * 0.2}s`;
+      observer.observe(el);
+    });
+  } else {
+    document.querySelectorAll('.content-wrapper h2, .content-wrapper h3, .content-wrapper p, .content-wrapper blockquote, .content-wrapper img').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+  }
 }
 
 // Progress Bar
@@ -181,6 +276,8 @@ function setupHeaderScroll() {
 
 // Initialize everything
 document.addEventListener('DOMContentLoaded', async () => {
+  setupViewNavigation();
+  setupNavHelper();
   setupProgressBar();
   setupScrollIndicator();
   setupHeaderScroll();
@@ -188,4 +285,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Add loaded class for animations
   document.body.classList.add('loaded');
+  
+  // Enhance content for the initial view
+  enhanceContent();
 });
