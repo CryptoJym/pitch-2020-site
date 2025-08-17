@@ -89,7 +89,20 @@ function enhanceDocument() {
 
   const title = document.createElement("h3");
   title.textContent = "Contents";
-  toc.appendChild(title);
+  
+  // Add close button for mobile
+  const closeButton = document.createElement("button");
+  closeButton.className = "toc-close";
+  closeButton.innerHTML = "×";
+  closeButton.setAttribute("aria-label", "Close table of contents");
+  closeButton.addEventListener("click", () => setTocOpen(false));
+  
+  const header = document.createElement("div");
+  header.className = "toc-header";
+  header.appendChild(title);
+  header.appendChild(closeButton);
+  
+  toc.appendChild(header);
   toc.appendChild(list);
   tocContainer.innerHTML = "";
   tocContainer.appendChild(toc);

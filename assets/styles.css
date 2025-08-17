@@ -64,6 +64,28 @@ h2, h3, h4 { font-weight: 600; }
 
 .toc { position: sticky; top: 84px; height: calc(100dvh - 120px); overflow: auto; background: var(--panel); border: 1px solid color-mix(in oklab, var(--panel), black 10%); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); }
 .toc h3 { margin: 6px 0 12px; font-size: 0.95rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+/* TOC header with close button */
+.toc-header { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  margin-bottom: 12px;
+}
+
+.toc-close { 
+  display: none; 
+  appearance: none; 
+  border: none; 
+  background: none; 
+  color: var(--muted); 
+  font-size: 28px; 
+  cursor: pointer; 
+  padding: 0 8px;
+  line-height: 1;
+}
+
+.toc-close:hover { color: var(--text); }
 .toc nav ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
 .toc nav a { text-decoration: none; color: var(--text); opacity: 0.9; border-radius: 8px; padding: 6px 8px; display: block; }
 .toc nav a:hover { background: color-mix(in oklab, var(--panel), var(--brand) 12%); }
@@ -83,7 +105,34 @@ h2, h3, h4 { font-weight: 600; }
 .content h3 { font-size: clamp(1.2rem, 2.4vw, 1.4rem); margin-top: 1.6rem; }
 .content p { line-height: 1.75; color: color-mix(in oklab, var(--text), var(--muted) 15%); }
 .content blockquote { border-left: 4px solid var(--brand-2); margin: 1rem auto; padding: 0.5rem 1rem; background: color-mix(in oklab, var(--panel), var(--brand-2) 4%); }
-.content img, .content video, .content iframe { max-width: 100%; height: auto; border-radius: 12px; box-shadow: var(--shadow); }
+.content img, .content video, .content iframe { 
+  max-width: 100%; 
+  height: auto; 
+  border-radius: 12px; 
+  box-shadow: var(--shadow); 
+  display: block;
+  margin: 1.5rem auto;
+}
+
+/* Responsive iframe container */
+.content .video-container,
+.content .iframe-container {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+  margin: 1.5rem auto;
+}
+
+.content .video-container iframe,
+.content .iframe-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
 .content table { width: 100%; border-collapse: collapse; background: color-mix(in oklab, var(--panel), white 4%); border-radius: 12px; overflow: hidden; }
 .content th, .content td { padding: 10px 12px; border-bottom: 1px solid color-mix(in oklab, var(--panel), black 12%); }
 .content a { color: color-mix(in oklab, var(--brand), var(--brand-2)); text-decoration: underline; }
@@ -93,10 +142,143 @@ h2, h3, h4 { font-weight: 600; }
 
 /* Mobile layout */
 @media (max-width: 960px) {
-  .layout { grid-template-columns: 1fr; gap: 16px; }
-  /* Make ToC a non-overlay block on mobile */
-  .toc { position: static; top: auto; right: auto; left: auto; height: auto; max-height: none; display: none; z-index: auto; }
-  .toc.open { display: block; }
+  .layout { 
+    grid-template-columns: 1fr; 
+    gap: 16px; 
+    margin: 16px auto;
+    padding: 0 12px;
+  }
+  
+  /* Mobile-optimized header */
+  .header-inner {
+    padding: 12px 16px;
+  }
+  
+  .brand-title {
+    font-size: 1rem;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  /* Make ToC a fullscreen overlay on mobile */
+  .toc { 
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    height: 100%;
+    display: none;
+    z-index: 999;
+    margin: 0;
+    border-radius: 0;
+    background: var(--panel);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 20px;
+  }
+  
+  .toc.open { 
+    display: block;
+    animation: slideIn 0.3s ease-out;
+  }
+  
+  /* Show close button on mobile */
+  .toc-close {
+    display: block;
+  }
+  
+  /* Add backdrop for mobile TOC */
+  .toc.open::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: -1;
+  }
+  
+  .toc nav ul {
+    gap: 12px;
+  }
+  
+  .toc nav a {
+    padding: 12px 16px;
+    font-size: 1.05rem;
+  }
+  
+  /* Mobile content adjustments */
+  .content {
+    padding: 20px 16px;
+    border-radius: 12px;
+  }
+  
+  .content > * {
+    max-width: 100%;
+  }
+  
+  /* Better touch targets */
+  .icon-button {
+    padding: 10px 14px;
+    font-size: 1.1rem;
+  }
+  
+  /* Footer spacing */
+  .site-footer {
+    margin: 24px 0 32px;
+  }
+}
+
+/* Smaller mobile devices */
+@media (max-width: 480px) {
+  .brand-title {
+    font-size: 0.9rem;
+    max-width: 150px;
+  }
+  
+  .content {
+    padding: 16px 12px;
+  }
+  
+  .content h1 {
+    font-size: 1.75rem;
+  }
+  
+  .content h2 {
+    font-size: 1.4rem;
+  }
+  
+  .content h3 {
+    font-size: 1.2rem;
+  }
+  
+  .content p {
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+  
+  /* Improve table scrolling on mobile */
+  .content table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Animation for mobile TOC */
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 /* Accessibility & polish */
