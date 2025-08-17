@@ -94,7 +94,8 @@ h2, h3, h4 { font-weight: 600; }
 /* Mobile layout */
 @media (max-width: 960px) {
   .layout { grid-template-columns: 1fr; gap: 16px; }
-  .toc { position: fixed; top: 64px; right: 16px; left: 16px; height: auto; max-height: 60dvh; display: none; z-index: 1001; }
+  /* Make ToC a non-overlay block on mobile */
+  .toc { position: static; top: auto; right: auto; left: auto; height: auto; max-height: none; display: none; z-index: auto; }
   .toc.open { display: block; }
 }
 
