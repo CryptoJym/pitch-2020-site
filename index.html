@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>2020 Master Pitch</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+  <script defer src="assets/main.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#content">Skip to content</a>
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">◆</span>
+        <span id="brandTitle" class="brand-title">2020 Master Pitch</span>
+      </div>
+      <div class="header-actions">
+        <button id="tocToggle" class="icon-button" aria-controls="toc" aria-expanded="false" aria-label="Toggle table of contents">☰</button>
+      </div>
+    </div>
+    <div id="progressBar" class="progress-bar" aria-hidden="true"></div>
+  </header>
+  <div class="layout">
+    <aside id="toc" class="toc" aria-label="Table of contents"></aside>
+    <main id="main" class="main" role="main">
+      <article id="content" class="content" tabindex="-1" aria-label="Pitch content">
+        <!-- Content will be injected verbatim -->
+      </article>
+    </main>
+  </div>
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <span>Rendered faithfully from the 2020 master pitch.</span>
+    </div>
+  </footer>
+</body>
+</html>

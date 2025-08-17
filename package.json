@@ -1,0 +1,12 @@
+{
+  "name": "pitch-2020-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs"
+  },
+  "dependencies": {
+    "sirv": "2.0.4"
+  }
+}
