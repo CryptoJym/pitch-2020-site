@@ -67,6 +67,7 @@ h2, h3, h4 { font-weight: 600; }
 .toc nav ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
 .toc nav a { text-decoration: none; color: var(--text); opacity: 0.9; border-radius: 8px; padding: 6px 8px; display: block; }
 .toc nav a:hover { background: color-mix(in oklab, var(--panel), var(--brand) 12%); }
+.toc nav a.active { background: color-mix(in oklab, var(--panel), var(--brand) 20%); }
 .toc .level-2 { padding-left: 10px; opacity: 0.9; }
 .toc .level-3 { padding-left: 20px; opacity: 0.8; }
 
@@ -102,3 +103,8 @@ h2, h3, h4 { font-weight: 600; }
 ::selection { background: color-mix(in oklab, var(--brand), var(--brand-2) 40%); color: white; }
 
 .content h1, .content h2, .content h3 { scroll-margin-top: 96px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .progress-bar { transition: none; }
+}

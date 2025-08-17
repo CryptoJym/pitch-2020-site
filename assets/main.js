@@ -8,6 +8,23 @@ function slugify(text) {
     .replace(/-+/g, "-");
 }
 
+function createUniqueSlugGenerator() {
+  const slugCounts = new Map();
+  return function nextUniqueSlug(base) {
+    const prev = slugCounts.get(base) || 0;
+    const next = prev + 1;
+    slugCounts.set(base, next);
+    return next === 1 ? base : `${base}-${next}`;
+  };
+}
+
+function setTocOpen(open) {
+  const toc = document.getElementById("toc");
+  const button = document.getElementById("tocToggle");
+  toc.classList.toggle("open", open);
+  button.setAttribute("aria-expanded", String(open));
+}
+
 async function loadVerbatimContent() {
   const contentContainer = document.getElementById("content");
   const brandTitle = document.getElementById("brandTitle");
@@ -39,13 +56,19 @@ async function loadVerbatimContent() {
 function enhanceDocument() {
   const contentContainer = document.getElementById("content");
   const tocContainer = document.getElementById("toc");
+  const mqlMobile = window.matchMedia("(max-width: 960px)");
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  const toUnique = createUniqueSlugGenerator();
   const headings = Array.from(
     contentContainer.querySelectorAll("h1, h2, h3")
   );
 
   headings.forEach((heading) => {
-    if (!heading.id) heading.id = slugify(heading.textContent || "section");
+    if (!heading.id) {
+      const base = slugify(heading.textContent || "section");
+      heading.id = toUnique(base);
+    }
   });
 
   const toc = document.createElement("nav");
@@ -71,20 +94,47 @@ function enhanceDocument() {
   tocContainer.innerHTML = "";
   tocContainer.appendChild(toc);
 
+  const smoothBehavior = prefersReducedMotion ? "auto" : "smooth";
   document.querySelectorAll('a[href^="#"]').forEach((link) => {
     link.addEventListener("click", (e) => {
-      const id = (e.currentTarget).getAttribute("href");
-      if (id) {
-        const target = document.querySelector(id);
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({ behavior: "smooth", block: "start" });
-          history.replaceState(null, "", id);
-          target.focus({ preventScroll: true });
-        }
-      }
+      const id = e.currentTarget.getAttribute("href");
+      if (!id) return;
+      const target = document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: smoothBehavior, block: "start" });
+      history.replaceState(null, "", id);
+      target.focus({ preventScroll: true });
+      if (mqlMobile.matches) setTocOpen(false);
     });
   });
+
+  tocContainer.addEventListener("click", (e) => {
+    const anchor = e.target.closest('a[href^="#"]');
+    if (!anchor) return;
+    if (mqlMobile.matches) setTocOpen(false);
+  });
+
+  try {
+    const tocLinksById = new Map(
+      Array.from(toc.querySelectorAll("a")).map((a) => [a.getAttribute("href").slice(1), a])
+    );
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const id = entry.target.id;
+          const link = tocLinksById.get(id);
+          if (!link) return;
+          if (entry.isIntersecting) {
+            toc.querySelectorAll("a.active").forEach((el) => el.classList.remove("active"));
+            link.classList.add("active");
+          }
+        });
+      },
+      { rootMargin: "-40% 0px -55% 0px", threshold: [0, 1] }
+    );
+    headings.forEach((h) => observer.observe(h));
+  } catch {}
 }
 
 function setupProgressBar() {
@@ -105,16 +155,21 @@ function setupProgressBar() {
 function setupTocToggle() {
   const button = document.getElementById("tocToggle");
   const toc = document.getElementById("toc");
-  function setState(open) {
-    toc.classList.toggle("open", open);
-    button.setAttribute("aria-expanded", String(open));
-  }
+  const mqlMobile = window.matchMedia("(max-width: 960px)");
   button.addEventListener("click", () => {
     const isOpen = toc.classList.contains("open");
-    setState(!isOpen);
+    setTocOpen(!isOpen);
   });
   window.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") setState(false);
+    if (e.key === "Escape") setTocOpen(false);
+  });
+  document.addEventListener("click", (e) => {
+    if (!mqlMobile.matches) return;
+    if (!toc.classList.contains("open")) return;
+    const target = e.target;
+    if (toc.contains(target)) return;
+    if (button.contains(target)) return;
+    setTocOpen(false);
   });
 }
 
