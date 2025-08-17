@@ -1,104 +1,191 @@
-function slugify(text) {
-  return text
-    .toString()
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, "")
-    .trim()
-    .replace(/\s+/g, "-")
-    .replace(/-+/g, "-");
-}
+// Premium Interactive Experience
+async function loadContent() {
+  const contentContainer = document.getElementById('content');
+  const brandTitle = document.getElementById('brandTitle');
 
-function createUniqueSlugGenerator() {
-  const slugCounts = new Map();
-  return function nextUniqueSlug(base) {
-    const prev = slugCounts.get(base) || 0;
-    const next = prev + 1;
-    slugCounts.set(base, next);
-    return next === 1 ? base : `${base}-${next}`;
-  };
-}
+  try {
+    const response = await fetch('/content/content.html', { cache: 'no-store' });
+    const raw = await response.text();
 
-// TOC functionality removed
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(raw, 'text/html');
 
-async function loadVerbatimContent() {
-  const contentContainer = document.getElementById("content");
-  const brandTitle = document.getElementById("brandTitle");
+    const body = doc.body || doc.querySelector('body');
+    const tempContainer = document.createElement('div');
+    tempContainer.innerHTML = body ? body.innerHTML : raw;
 
-  const response = await fetch("/content/content.html", { cache: "no-store" });
-  const raw = await response.text();
+    // Remove any scripts for security
+    tempContainer.querySelectorAll('script').forEach(el => el.remove());
 
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(raw, "text/html");
+    contentContainer.innerHTML = tempContainer.innerHTML;
 
-  const body = doc.body || doc.querySelector("body");
-  const tempContainer = document.createElement("div");
-  tempContainer.innerHTML = body ? body.innerHTML : raw;
-
-  tempContainer.querySelectorAll("script").forEach((el) => el.remove());
-
-  contentContainer.innerHTML = tempContainer.innerHTML;
-
-  const firstHeading = contentContainer.querySelector("h1, h2, h3");
-  if (firstHeading) {
-    const titleText = firstHeading.textContent?.trim() || "2020 Master Pitch";
-    document.title = titleText;
-    brandTitle.textContent = titleText;
-  }
-
-  enhanceDocument();
-}
-
-function enhanceDocument() {
-  const contentContainer = document.getElementById("content");
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  const toUnique = createUniqueSlugGenerator();
-  const headings = Array.from(
-    contentContainer.querySelectorAll("h1, h2, h3")
-  );
-
-  // Add IDs to headings for anchor links
-  headings.forEach((heading) => {
-    if (!heading.id) {
-      const base = slugify(heading.textContent || "section");
-      heading.id = toUnique(base);
+    // Update title from first heading
+    const firstHeading = contentContainer.querySelector('h1, h2, h3');
+    if (firstHeading) {
+      const titleText = firstHeading.textContent?.trim() || '2020 Master Pitch';
+      document.title = titleText;
+      brandTitle.textContent = titleText;
     }
-  });
 
-  // Smooth scrolling for anchor links
-  const smoothBehavior = prefersReducedMotion ? "auto" : "smooth";
-  document.querySelectorAll('a[href^="#"]').forEach((link) => {
-    link.addEventListener("click", (e) => {
-      const id = e.currentTarget.getAttribute("href");
-      if (!id) return;
-      const target = document.querySelector(id);
+    // Enhance the loaded content
+    enhanceContent();
+  } catch (error) {
+    console.error('Error loading content:', error);
+    contentContainer.innerHTML = '<p>Error loading content. Please refresh the page.</p>';
+  }
+}
+
+function enhanceContent() {
+  // Add smooth scrolling to anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const href = e.currentTarget.getAttribute('href');
+      if (!href || href === '#') return;
+      
+      const target = document.querySelector(href);
       if (!target) return;
+      
       e.preventDefault();
-      target.scrollIntoView({ behavior: smoothBehavior, block: "start" });
-      history.replaceState(null, "", id);
-      target.focus({ preventScroll: true });
+      const offset = 100; // Account for fixed header
+      const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
+      
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      });
     });
   });
+
+  // Add intersection observer for fade-in animations
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, observerOptions);
+
+  // Observe all content elements
+  document.querySelectorAll('.content-wrapper h2, .content-wrapper h3, .content-wrapper p, .content-wrapper blockquote, .content-wrapper img').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
 }
 
+// Progress Bar
 function setupProgressBar() {
-  const bar = document.getElementById("progressBar");
-  function update() {
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    const height =
-      document.documentElement.scrollHeight -
-      document.documentElement.clientHeight;
-    const progress = Math.max(0, Math.min(1, height ? scrollTop / height : 0));
-    bar.style.width = `${progress * 100}%`;
+  const progressBar = document.getElementById('progressBar');
+  
+  function updateProgress() {
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight - windowHeight;
+    const scrolled = window.scrollY;
+    const progress = (scrolled / documentHeight) * 100;
+    
+    progressBar.style.width = `${Math.min(progress, 100)}%`;
   }
-  window.addEventListener("scroll", update, { passive: true });
-  window.addEventListener("resize", update);
-  update();
+
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  window.addEventListener('resize', updateProgress);
+  updateProgress();
 }
 
-// TOC toggle removed
+// Scroll to Top Button
+function setupScrollIndicator() {
+  const scrollIndicator = document.getElementById('scrollIndicator');
+  let isScrolling = false;
 
-window.addEventListener("DOMContentLoaded", async () => {
+  function toggleScrollIndicator() {
+    const scrolled = window.scrollY;
+    const threshold = 300;
+
+    if (scrolled > threshold) {
+      scrollIndicator.classList.add('visible');
+      scrollIndicator.style.transform = 'rotate(180deg)';
+    } else {
+      scrollIndicator.classList.remove('visible');
+      scrollIndicator.style.transform = 'rotate(0deg)';
+    }
+  }
+
+  scrollIndicator.addEventListener('click', () => {
+    if (isScrolling) return;
+    isScrolling = true;
+
+    const scrolled = window.scrollY;
+    const threshold = 300;
+
+    if (scrolled > threshold) {
+      // Scroll to top
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    } else {
+      // Scroll to next section
+      const currentPosition = window.scrollY;
+      const sections = document.querySelectorAll('h2');
+      
+      for (let section of sections) {
+        const sectionTop = section.getBoundingClientRect().top + currentPosition;
+        if (sectionTop > currentPosition + 100) {
+          window.scrollTo({
+            top: sectionTop - 100,
+            behavior: 'smooth'
+          });
+          break;
+        }
+      }
+    }
+
+    setTimeout(() => {
+      isScrolling = false;
+    }, 1000);
+  });
+
+  window.addEventListener('scroll', toggleScrollIndicator, { passive: true });
+  toggleScrollIndicator();
+}
+
+// Header scroll effect
+function setupHeaderScroll() {
+  const header = document.querySelector('.site-header');
+  let lastScroll = 0;
+
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.scrollY;
+
+    if (currentScroll > lastScroll && currentScroll > 100) {
+      header.style.transform = 'translateY(-100%)';
+    } else {
+      header.style.transform = 'translateY(0)';
+    }
+
+    if (currentScroll > 50) {
+      header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
+    } else {
+      header.style.boxShadow = 'none';
+    }
+
+    lastScroll = currentScroll;
+  }, { passive: true });
+}
+
+// Initialize everything
+document.addEventListener('DOMContentLoaded', async () => {
   setupProgressBar();
-  await loadVerbatimContent();
+  setupScrollIndicator();
+  setupHeaderScroll();
+  await loadContent();
+
+  // Add loaded class for animations
+  document.body.classList.add('loaded');
 });
