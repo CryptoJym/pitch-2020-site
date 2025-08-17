@@ -303,16 +303,23 @@ function setupFinancialCalculator() {
     forceValue.textContent = fieldForce;
     automationValue.textContent = (automationRate * 100).toFixed(0);
     
+    // Calculate based on actual data mix:
+    // Field reps at $22/hr, managers at $40/hr, QA at $28/hr
+    // Assuming 80% field reps, 15% managers, 5% QA for blended rate
+    const blendedRate = (0.8 * 22) + (0.15 * 40) + (0.05 * 28); // $25/hr blended
+    const adjustedRate = hourlyRate * (blendedRate / 25); // Scale to user input
+    
     // Calculate annual cost base (40 hours/week * 52 weeks)
     const annualHours = 40 * 52;
-    const annualCostPerRep = hourlyRate * annualHours;
-    const totalCostBase = (fieldForce * annualCostPerRep) / 1000000; // Convert to millions
+    const annualCostPerHead = adjustedRate * annualHours;
+    const totalCostBase = (fieldForce * annualCostPerHead) / 1000000; // Convert to millions
     
-    // Calculate savings
-    const annualSavings = totalCostBase * automationRate;
+    // Calculate savings based on actual phase data
+    const actualSavingsRate = 7.29 / (120 * 40 * annualHours / 1000000); // From real data
+    const annualSavings = totalCostBase * automationRate * actualSavingsRate;
     
-    // Calculate ROI timeline (assuming $5M implementation cost)
-    const implementationCost = 5; // $5M
+    // Calculate ROI timeline using actual one-time costs
+    const implementationCost = 1.87; // $1.87M total one-time from phases
     const monthlyROI = (annualSavings / 12);
     const roiMonths = implementationCost / monthlyROI;
     
