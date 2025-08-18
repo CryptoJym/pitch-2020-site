@@ -3489,3 +3489,152 @@ body {
     overflow-y: auto;
   }
 }
+/* Enhanced ROI Visualization Styles */
+.roi-summary {
+  margin-top: 3rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%);
+  border-radius: 1rem;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.roi-summary h3 {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: #3b82f6;
+}
+
+.roi-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.roi-metric {
+  text-align: center;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.roi-metric:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.roi-metric.highlight {
+  background: linear-gradient(135deg, #6366f1 0%, #3b82f6 100%);
+  color: white;
+  transform: scale(1.05);
+  border: none;
+}
+
+.roi-metric .metric-label {
+  font-size: 0.875rem;
+  opacity: 0.8;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.roi-metric .metric-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.roi-metric.highlight .metric-value {
+  background: none;
+  -webkit-text-fill-color: white;
+}
+
+.roi-metric .metric-subtext {
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+.roi-metric.highlight .metric-label,
+.roi-metric.highlight .metric-subtext {
+  opacity: 0.9;
+}
+
+/* Updated Phase Table Badge Styles */
+.phase-table-enhanced .phase-indicator {
+  position: relative;
+  padding-left: 1rem;
+}
+
+.phase-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #6366f1, #3b82f6);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+
+.phase-indicator span {
+  display: block;
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.impact-table .total-row {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.impact-table .total-row td {
+  padding: 1.5rem 1rem;
+  border-top: 2px solid #3b82f6;
+  color: #f1f5f9;
+}
+
+.total-cost, .total-savings {
+  color: #3b82f6;
+  font-size: 1.25rem;
+}
+
+/* Financial Impact Visual Enhancement */
+.big-investment, .big-savings {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+.savings-box {
+  position: relative;
+  overflow: hidden;
+}
+
+.savings-box::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+  animation: sweep 3s linear infinite;
+}
+
+@keyframes sweep {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
