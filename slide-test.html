@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Slide Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #1a1a1a;
+      color: white;
+    }
+    .test-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .status {
+      background: #333;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 5px;
+      font-family: monospace;
+    }
+    .success {
+      color: #4caf50;
+    }
+    .error {
+      color: #f44336;
+    }
+    .info {
+      color: #2196f3;
+    }
+  </style>
+</head>
+<body>
+  <div class="test-container">
+    <h1>Slide Navigation Test Page</h1>
+    
+    <div class="status" id="status">
+      <p class="info">Click the buttons below to test slide navigation...</p>
+    </div>
+    
+    <div>
+      <button onclick="testSlideNavigation()">Test Slide Navigation</button>
+      <button onclick="goToDeepDive()">Go to Deep Dive</button>
+      <button onclick="testNextSlide()">Test Next Slide</button>
+      <button onclick="testPrevSlide()">Test Previous Slide</button>
+      <button onclick="window.location.href='/'">Back to Main Site</button>
+    </div>
+    
+    <div class="status" style="margin-top: 30px;">
+      <h3>Instructions:</h3>
+      <ol>
+        <li>Click "Go to Deep Dive" first to switch to the Deep Dive view</li>
+        <li>Then click "Test Next Slide" or "Test Previous Slide" to navigate</li>
+        <li>Open browser console (F12) to see detailed logs</li>
+      </ol>
+    </div>
+  </div>
+
+  <script>
+    function log(message, type = 'info') {
+      const status = document.getElementById('status');
+      const p = document.createElement('p');
+      p.className = type;
+      p.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+      status.appendChild(p);
+      console.log(message);
+    }
+
+    function testSlideNavigation() {
+      log('Testing slide navigation setup...');
+      
+      // Check if changeSlide exists
+      if (typeof window.changeSlide === 'function') {
+        log('✓ window.changeSlide function exists', 'success');
+      } else {
+        log('✗ window.changeSlide function NOT found', 'error');
+      }
+      
+      // Check if slideDebug exists
+      if (typeof window.slideDebug === 'object') {
+        log('✓ slideDebug object exists', 'success');
+        log(`Current slide: ${window.slideDebug.getCurrentSlide()}`, 'info');
+        log(`Total slides: ${window.slideDebug.getTotalSlides()}`, 'info');
+      } else {
+        log('✗ slideDebug object NOT found', 'error');
+      }
+      
+      // Check for slides in DOM
+      const slides = document.querySelectorAll('.webdeck-slide');
+      log(`Found ${slides.length} slides in DOM`, slides.length > 0 ? 'success' : 'error');
+      
+      // Check current view
+      const detailSection = document.getElementById('detail-section');
+      const isDetailActive = detailSection && detailSection.classList.contains('active');
+      log(`Deep Dive view active: ${isDetailActive}`, isDetailActive ? 'success' : 'info');
+    }
+
+    function goToDeepDive() {
+      log('Switching to Deep Dive view...');
+      
+      // Switch to detail view
+      document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+      const detailSection = document.getElementById('detail-section');
+      if (detailSection) {
+        detailSection.classList.add('active');
+        log('✓ Switched to Deep Dive view', 'success');
+      } else {
+        log('✗ Could not find detail-section', 'error');
+      }
+      
+      // Update nav buttons
+      document.querySelectorAll('.view-toggle').forEach(b => b.classList.remove('active'));
+      const detailBtn = document.querySelector('[data-view="detail"]');
+      if (detailBtn) {
+        detailBtn.classList.add('active');
+      }
+    }
+
+    function testNextSlide() {
+      log('Testing next slide...');
+      
+      if (typeof window.changeSlide === 'function') {
+        try {
+          window.changeSlide('next');
+          log('✓ changeSlide("next") executed', 'success');
+        } catch (e) {
+          log(`✗ Error: ${e.message}`, 'error');
+        }
+      } else if (typeof window.slideDebug === 'object' && window.slideDebug.changeSlide) {
+        try {
+          window.slideDebug.changeSlide('next');
+          log('✓ slideDebug.changeSlide("next") executed', 'success');
+        } catch (e) {
+          log(`✗ Error: ${e.message}`, 'error');
+        }
+      } else {
+        log('✗ No slide change function available', 'error');
+      }
+    }
+
+    function testPrevSlide() {
+      log('Testing previous slide...');
+      
+      if (typeof window.changeSlide === 'function') {
+        try {
+          window.changeSlide('prev');
+          log('✓ changeSlide("prev") executed', 'success');
+        } catch (e) {
+          log(`✗ Error: ${e.message}`, 'error');
+        }
+      } else if (typeof window.slideDebug === 'object' && window.slideDebug.changeSlide) {
+        try {
+          window.slideDebug.changeSlide('prev');
+          log('✓ slideDebug.changeSlide("prev") executed', 'success');
+        } catch (e) {
+          log(`✗ Error: ${e.message}`, 'error');
+        }
+      } else {
+        log('✗ No slide change function available', 'error');
+      }
+    }
+
+    // Load the scripts
+    window.addEventListener('DOMContentLoaded', () => {
+      log('DOM loaded, loading scripts...');
+      
+      // Load main.js
+      const mainScript = document.createElement('script');
+      mainScript.src = 'assets/main.js';
+      mainScript.onload = () => log('✓ main.js loaded', 'success');
+      mainScript.onerror = () => log('✗ Failed to load main.js', 'error');
+      document.body.appendChild(mainScript);
+      
+      // Load slide-fix.js
+      const slideFixScript = document.createElement('script');
+      slideFixScript.src = 'assets/slide-fix.js';
+      slideFixScript.onload = () => {
+        log('✓ slide-fix.js loaded', 'success');
+        setTimeout(testSlideNavigation, 100);
+      };
+      slideFixScript.onerror = () => log('✗ Failed to load slide-fix.js', 'error');
+      document.body.appendChild(slideFixScript);
+    });
+  </script>
+</body>
+</html>
