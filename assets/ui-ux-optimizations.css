@@ -1,0 +1,508 @@
+/* UI/UX Optimizations for Enhanced User Experience */
+
+/* ===========================
+   1. Navigation Enhancements
+   =========================== */
+
+/* Active view indicator with smooth transition */
+.view-toggle {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.view-toggle::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 80%;
+  height: 2px;
+  background: var(--accent);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.view-toggle.active::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+.view-toggle:hover {
+  transform: translateY(-1px);
+}
+
+.view-toggle:active {
+  transform: translateY(0);
+}
+
+/* Progress bar smooth animation */
+#progressBar {
+  transition: width 0.3s ease-out;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--accent-2) 100%);
+  box-shadow: 0 0 10px rgba(79, 172, 254, 0.3);
+}
+
+/* ===========================
+   2. Typography & Readability
+   =========================== */
+
+/* Improved font rendering */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Better paragraph spacing */
+p {
+  line-height: 1.7;
+  margin-bottom: 1.2em;
+}
+
+/* Enhanced heading hierarchy */
+h1, h2, h3, h4 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-top: 0;
+}
+
+.slide-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.9) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===========================
+   3. Card & Container Polish
+   =========================== */
+
+/* Enhanced metric cards */
+.metric-card {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.metric-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(79, 172, 254, 0.1) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.metric-card:hover::before {
+  opacity: 1;
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Journey nodes enhancement */
+.journey-node {
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.journey-node::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.journey-node:hover::before {
+  opacity: 0.3;
+}
+
+.journey-node:hover {
+  transform: scale(1.05);
+}
+
+.journey-node:active {
+  transform: scale(0.98);
+}
+
+/* ===========================
+   4. Slide Improvements
+   =========================== */
+
+/* Smooth slide transitions */
+.webdeck-slide {
+  opacity: 0;
+  transform: translateX(20px);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.webdeck-slide.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Better slide navigation */
+.slide-prev, .slide-next {
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.slide-prev:hover, .slide-next:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+}
+
+.slide-prev:active, .slide-next:active {
+  transform: scale(0.95);
+}
+
+/* Slide dots enhancement */
+.nav-dot {
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.nav-dot:hover {
+  background: rgba(255, 255, 255, 0.5);
+  transform: scale(1.2);
+}
+
+.nav-dot.active {
+  width: 24px;
+  background: var(--accent);
+}
+
+/* ===========================
+   5. Story Mode Polish
+   =========================== */
+
+.story-chapter {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.story-chapter.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.chapter-number {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+  box-shadow: 0 4px 20px rgba(79, 172, 254, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.story-chapter:hover .chapter-number {
+  transform: scale(1.1) rotate(5deg);
+}
+
+/* Chapter navigation enhancement */
+.chapter-nav {
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+}
+
+.chapter-nav:hover {
+  transform: translateX(4px);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.chapter-nav.prev:hover {
+  transform: translateX(-4px);
+}
+
+.chapter-nav:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* Progress indicators */
+.indicator {
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.indicator:hover {
+  background: rgba(255, 255, 255, 0.5);
+  transform: scale(1.2);
+}
+
+.indicator.active {
+  width: 24px;
+  background: var(--accent);
+  box-shadow: 0 0 10px rgba(79, 172, 254, 0.5);
+}
+
+/* ===========================
+   6. Rollout Section Polish
+   =========================== */
+
+.phase {
+  opacity: 0;
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.phase:nth-child(1) { animation-delay: 0.1s; }
+.phase:nth-child(2) { animation-delay: 0.2s; }
+.phase:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+.phase:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Financial calculator enhancement */
+.calc-input input[type="range"] {
+  background: rgba(255, 255, 255, 0.1);
+  height: 6px;
+  border-radius: 3px;
+  outline: none;
+  transition: background 0.2s ease;
+}
+
+.calc-input input[type="range"]:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Webkit slider thumb */
+.calc-input input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: var(--accent);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.calc-input input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 4px 12px rgba(79, 172, 254, 0.5);
+}
+
+/* ===========================
+   7. Interactive Elements
+   =========================== */
+
+/* All buttons enhancement */
+button {
+  position: relative;
+  overflow: hidden;
+}
+
+button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+button:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Links enhancement */
+a {
+  position: relative;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.3s ease;
+}
+
+a:hover::after {
+  width: 100%;
+}
+
+/* ===========================
+   8. Loading States
+   =========================== */
+
+/* Add skeleton loading for content */
+.loading {
+  position: relative;
+  overflow: hidden;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  to {
+    left: 100%;
+  }
+}
+
+/* ===========================
+   9. Scroll Enhancements
+   =========================== */
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Scroll indicator enhancement */
+#scrollIndicator {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+#scrollIndicator:hover {
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ===========================
+   10. Focus States
+   =========================== */
+
+/* Better focus indicators for accessibility */
+:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.5);
+}
+
+button:focus,
+a:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.5);
+}
+
+/* ===========================
+   11. Responsive Refinements
+   =========================== */
+
+@media (max-width: 768px) {
+  /* Touch-friendly tap targets */
+  button, .journey-node, .nav-dot, .indicator {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  /* Better mobile typography */
+  body {
+    font-size: 16px;
+  }
+  
+  /* Improved mobile spacing */
+  .view-section {
+    padding: 1.5rem;
+  }
+}
+
+/* ===========================
+   12. Dark Mode Refinements
+   =========================== */
+
+@media (prefers-color-scheme: dark) {
+  /* Enhanced shadows for dark mode */
+  .metric-card, .phase, .story-chapter {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
+  
+  /* Better contrast */
+  .insight-box, .assumption-box {
+    background: rgba(255, 255, 255, 0.08);
+  }
+}
+
+/* ===========================
+   13. Animation Performance
+   =========================== */
+
+/* Use GPU acceleration */
+.webdeck-slide,
+.story-chapter,
+.metric-card,
+.journey-node {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

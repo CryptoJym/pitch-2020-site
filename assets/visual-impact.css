@@ -1,0 +1,434 @@
+/* Visual Impact Enhancements */
+
+/* ===========================
+   Replace/Augment/No-Go Impact
+   =========================== */
+
+.decision-column {
+  position: relative;
+  padding: 2rem;
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.decision-column::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(135deg, transparent, var(--accent));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.decision-column:hover::before {
+  opacity: 1;
+}
+
+.decision-column.replace {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05));
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.decision-column.replace h3 {
+  color: #ef4444;
+  text-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+}
+
+.decision-column.augment {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.05));
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.decision-column.augment h3 {
+  color: #22c55e;
+  text-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
+}
+
+.decision-column.nogo {
+  background: linear-gradient(135deg, rgba(251, 146, 60, 0.1), rgba(251, 146, 60, 0.05));
+  border: 1px solid rgba(251, 146, 60, 0.3);
+}
+
+.decision-column.nogo h3 {
+  color: #fb923c;
+  text-shadow: 0 0 20px rgba(251, 146, 60, 0.5);
+}
+
+/* Animated icons */
+.decision-column h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.decision-column:hover h3 {
+  transform: scale(1.05);
+}
+
+/* List animations */
+.decision-column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.decision-column li {
+  padding: 0.75rem 0;
+  padding-left: 2rem;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.decision-column li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  transition: all 0.2s ease;
+}
+
+.decision-column:hover li::before {
+  transform: translateX(4px);
+}
+
+.decision-column.replace li::before { color: #ef4444; }
+.decision-column.augment li::before { color: #22c55e; }
+.decision-column.nogo li::before { color: #fb923c; }
+
+/* ===========================
+   ROI Visualization Impact
+   =========================== */
+
+.roi-chart {
+  background: linear-gradient(135deg, rgba(79, 172, 254, 0.05), transparent);
+  border-radius: 1rem;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.roi-chart::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(79, 172, 254, 0.1) 0%, transparent 70%);
+  animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+.roi-table {
+  position: relative;
+  z-index: 1;
+  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.roi-table th {
+  background: rgba(79, 172, 254, 0.2);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.roi-table td {
+  font-family: 'SF Mono', 'Monaco', monospace;
+  font-weight: 500;
+}
+
+.roi-table tr:hover {
+  background: rgba(79, 172, 254, 0.1);
+  transform: scale(1.02);
+  transition: all 0.2s ease;
+}
+
+/* ROI Highlights with animation */
+.roi-highlights {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.highlight {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.highlight::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.8s ease;
+}
+
+.highlight:hover::before {
+  left: 100%;
+}
+
+.highlight:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(79, 172, 254, 0.3);
+  border-color: var(--accent);
+}
+
+.highlight .value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-shadow: 0 0 30px rgba(79, 172, 254, 0.5);
+  display: block;
+  margin-top: 0.5rem;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 20px rgba(79, 172, 254, 0.5); }
+  to { text-shadow: 0 0 30px rgba(79, 172, 254, 0.8), 0 0 40px rgba(79, 172, 254, 0.4); }
+}
+
+/* ===========================
+   Phase Timeline Impact
+   =========================== */
+
+.phase {
+  position: relative;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.phase::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.phase:hover::before {
+  transform: scaleX(1);
+}
+
+.phase-number {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #000;
+  font-weight: 700;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.phase:hover .phase-number {
+  transform: scale(1.1);
+  box-shadow: 0 4px 20px rgba(79, 172, 254, 0.5);
+}
+
+/* Financial impact visualization */
+.financial-impact {
+  margin-top: 1.5rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.impact-item {
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.impact-item.saved {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.1));
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.impact-item.saved .value {
+  color: #22c55e;
+  font-weight: 700;
+  font-size: 1.25rem;
+  text-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
+}
+
+.impact-item:hover {
+  transform: translateX(4px);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ===========================
+   Story Mode Visual Impact
+   =========================== */
+
+.story-chapter {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), transparent);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.chapter-number {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 700;
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.insight-box {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(79, 172, 254, 0.05));
+  border-left: 4px solid var(--accent);
+  border-radius: 0.5rem;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.insight-box::before {
+  content: '💡';
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  font-size: 1.5rem;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.insight-box:hover {
+  transform: translateX(8px);
+  box-shadow: 0 8px 24px rgba(79, 172, 254, 0.2);
+}
+
+/* ===========================
+   Metric Cards Impact
+   =========================== */
+
+.metric-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.metric-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #fff, rgba(255, 255, 255, 0.8));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.metric-card:hover .metric-value {
+  transform: scale(1.1);
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+}
+
+.metric-label {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.8;
+}
+
+/* Animated background pattern */
+.metric-card::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  animation: rotate 10s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.metric-card:hover::after {
+  opacity: 0.1;
+}
+
+/* ===========================
+   Navigation Visual Feedback
+   =========================== */
+
+.view-toggle {
+  position: relative;
+  isolation: isolate;
+}
+
+.view-toggle.active {
+  background: rgba(79, 172, 254, 0.2);
+  color: var(--accent);
+}
+
+.view-toggle svg {
+  transition: all 0.3s ease;
+}
+
+.view-toggle:hover svg {
+  transform: scale(1.2);
+}
+
+.view-toggle.active svg {
+  filter: drop-shadow(0 0 10px rgba(79, 172, 254, 0.8));
+}
