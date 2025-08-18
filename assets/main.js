@@ -58,6 +58,11 @@ function setupViewNavigation() {
 // Enhanced Content Loading
 async function loadContent() {
   const contentContainer = document.getElementById('content');
+  // If no content container exists on this page, safely skip dynamic loading
+  if (!contentContainer) {
+    console.warn('loadContent: Skipping because #content container was not found');
+    return;
+  }
   const brandTitle = document.getElementById('brandTitle');
 
   try {
@@ -89,7 +94,9 @@ async function loadContent() {
     setupDetailPanels();
   } catch (error) {
     console.error('Error loading content:', error);
-    contentContainer.innerHTML = '<p>Error loading content. Please refresh the page.</p>';
+    if (contentContainer) {
+      contentContainer.innerHTML = '<p>Error loading content. Please refresh the page.</p>';
+    }
   }
 }
 
@@ -500,9 +507,12 @@ window.navigateStory = function(direction) {
   const prevBtn = document.getElementById('prevChapter');
   const nextBtn = document.getElementById('nextChapter');
   
-  // Hide current chapter
-  chapters[currentChapter - 1].classList.remove('active');
-  indicators[currentChapter - 1].classList.remove('active');
+  // Hide all chapters to ensure visibility toggles correctly
+  chapters.forEach((chapter, index) => {
+    chapter.classList.remove('active');
+    chapter.style.display = 'none';
+    if (indicators[index]) indicators[index].classList.remove('active');
+  });
   
   // Update chapter number
   if (direction === 'next' && currentChapter < totalChapters) {
@@ -512,6 +522,7 @@ window.navigateStory = function(direction) {
   }
   
   // Show new chapter
+  chapters[currentChapter - 1].style.display = 'block';
   chapters[currentChapter - 1].classList.add('active');
   indicators[currentChapter - 1].classList.add('active');
   
