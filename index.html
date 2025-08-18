@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/styles.css">
-  <script defer src="assets/main.js"></script>
+  <link rel="stylesheet" href="assets/mobile-enhanced.css">
 </head>
 <body>
   <div class="hero-gradient"></div>
@@ -2063,5 +2063,64 @@
       <path d="M12 5v14m0 0l7-7m-7 7l-7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </div>
+  
+  <!-- Scripts -->
+  <script src="assets/main.js"></script>
+  <script src="assets/slide-fix.js"></script>
+  
+  <!-- Debug Script -->
+  <script>
+    // Wait for DOM and scripts to fully load
+    window.addEventListener('DOMContentLoaded', function() {
+      console.log('DOM loaded, checking slide setup...');
+      
+      // Check if changeSlide function exists
+      if (typeof window.changeSlide !== 'function') {
+        console.error('ERROR: window.changeSlide is not defined!');
+        
+        // Create a fallback changeSlide function
+        window.changeSlide = function(direction) {
+          console.log('Fallback changeSlide called with:', direction);
+          const slides = document.querySelectorAll('.webdeck-slide');
+          const activeSlide = document.querySelector('.webdeck-slide.active');
+          
+          if (!activeSlide) {
+            console.error('No active slide found!');
+            return;
+          }
+          
+          let currentIndex = Array.from(slides).indexOf(activeSlide);
+          let nextIndex;
+          
+          if (direction === 'next') {
+            nextIndex = (currentIndex + 1) % slides.length;
+          } else if (direction === 'prev') {
+            nextIndex = (currentIndex - 1 + slides.length) % slides.length;
+          } else if (typeof direction === 'number') {
+            nextIndex = direction - 1;
+          }
+          
+          // Hide current slide
+          activeSlide.classList.remove('active');
+          
+          // Show next slide
+          slides[nextIndex].classList.add('active');
+          
+          console.log('Slide changed from', currentIndex + 1, 'to', nextIndex + 1);
+        };
+        
+        console.log('Fallback changeSlide function created');
+      } else {
+        console.log('window.changeSlide is properly defined');
+      }
+      
+      // Log slide info
+      const slides = document.querySelectorAll('.webdeck-slide');
+      console.log('Number of slides found:', slides.length);
+      
+      const activeSlide = document.querySelector('.webdeck-slide.active');
+      console.log('Active slide:', activeSlide ? activeSlide.getAttribute('data-slide') : 'none');
+    });
+  </script>
 </body>
 </html>

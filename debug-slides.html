@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Slides</title>
+    <script>
+        function testSlides() {
+            console.log('Testing slide functionality...');
+            console.log('currentSlide:', typeof currentSlide !== 'undefined' ? currentSlide : 'UNDEFINED');
+            console.log('totalSlides:', typeof totalSlides !== 'undefined' ? totalSlides : 'UNDEFINED');
+            console.log('window.changeSlide:', typeof window.changeSlide);
+            
+            // Check if slides exist
+            const slides = document.querySelectorAll('.webdeck-slide');
+            console.log('Number of slides found:', slides.length);
+            
+            // Check active slide
+            const activeSlide = document.querySelector('.webdeck-slide.active');
+            console.log('Active slide:', activeSlide ? activeSlide.getAttribute('data-slide') : 'NONE');
+            
+            // Try to call changeSlide
+            if (typeof window.changeSlide === 'function') {
+                console.log('Attempting to change slide...');
+                try {
+                    window.changeSlide('next');
+                    console.log('changeSlide executed successfully');
+                } catch (e) {
+                    console.error('Error calling changeSlide:', e);
+                }
+            } else {
+                console.error('window.changeSlide is not a function!');
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Slide Debug Test</h1>
+    <button onclick="testSlides()">Test Slides</button>
+    <button onclick="window.location.href='/'">Back to Site</button>
+    
+    <div id="output"></div>
+</body>
+</html>

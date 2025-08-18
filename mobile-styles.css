@@ -1,0 +1,412 @@
+/* Mobile Optimization Styles */
+
+/* Base Mobile Styles */
+@media (max-width: 768px) {
+  /* Global Adjustments */
+  body {
+    font-size: 14px;
+    overflow-x: hidden;
+  }
+  
+  /* Header Mobile */
+  .site-header {
+    padding: 1rem;
+  }
+  
+  .header-content {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .brand h1 {
+    font-size: 1.5rem;
+  }
+  
+  .view-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  .view-toggle {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+  
+  .view-toggle span {
+    display: none;
+  }
+  
+  .view-toggle svg {
+    width: 24px;
+    height: 24px;
+  }
+  
+  /* Overview Section Mobile */
+  .overview-hero {
+    padding: 2rem 1rem;
+  }
+  
+  .overview-title {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+  
+  .overview-subtitle {
+    font-size: 1rem;
+  }
+  
+  .key-metrics {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .metric-card {
+    padding: 1.5rem 1rem;
+  }
+  
+  .metric-value {
+    font-size: 2rem;
+  }
+  
+  .journey-visual {
+    padding: 1rem;
+    overflow-x: auto;
+  }
+  
+  .journey-path {
+    min-width: 600px;
+  }
+  
+  /* Story Mode Mobile */
+  .story-container {
+    padding: 2rem 1rem;
+  }
+  
+  .story-header h2 {
+    font-size: 2rem;
+  }
+  
+  .story-intro {
+    font-size: 1rem;
+  }
+  
+  .story-chapter {
+    padding: 2rem 1.5rem;
+  }
+  
+  .chapter-marker {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .chapter-number {
+    font-size: 2rem;
+  }
+  
+  .chapter-content h3 {
+    font-size: 1.75rem;
+  }
+  
+  .chapter-content p {
+    font-size: 1rem;
+  }
+  
+  /* Story Visuals Mobile */
+  .metric-showcase,
+  .discovery-grid,
+  .sprint-timeline,
+  .results-grid,
+  .scaling-diagram,
+  .future-vision {
+    grid-template-columns: 1fr;
+  }
+  
+  .vision-board {
+    grid-template-columns: 1fr;
+  }
+  
+  .vision-arrow {
+    transform: rotate(90deg);
+    text-align: center;
+    margin: 1rem 0;
+  }
+  
+  .scale-phase::after {
+    display: none;
+  }
+  
+  /* Deep Dive Webdeck Mobile */
+  .webdeck-container {
+    padding: 1rem;
+  }
+  
+  .slide-wrapper {
+    padding: 1rem;
+  }
+  
+  .slide-header {
+    padding: 1rem;
+  }
+  
+  .slide-title {
+    font-size: 2rem;
+  }
+  
+  .slide-subtitle {
+    font-size: 1rem;
+  }
+  
+  .slide-counter {
+    font-size: 0.875rem;
+  }
+  
+  .slide-content {
+    padding: 1rem;
+  }
+  
+  /* Slide Content Mobile */
+  .discovery-hero {
+    text-align: center;
+  }
+  
+  .big-number {
+    font-size: 3rem;
+  }
+  
+  .big-label {
+    font-size: 1.25rem;
+  }
+  
+  .discovery-insights {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .insight-block {
+    padding: 1.5rem;
+  }
+  
+  .rail-visualization {
+    overflow-x: auto;
+    padding-bottom: 1rem;
+  }
+  
+  .rail-visualization > div {
+    min-width: 500px;
+  }
+  
+  .tech-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .investment-visual {
+    flex-direction: column;
+    gap: 1.5rem;
+    text-align: center;
+  }
+  
+  .arrow-flow {
+    transform: rotate(90deg);
+  }
+  
+  /* Tables Mobile */
+  .impact-table,
+  .risk-table {
+    font-size: 0.75rem;
+    display: block;
+    overflow-x: auto;
+  }
+  
+  .impact-table th,
+  .impact-table td,
+  .risk-table th,
+  .risk-table td {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+  }
+  
+  /* Decision Matrix Mobile */
+  .decision-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  /* ROI Charts Mobile */
+  .roi-metrics {
+    grid-template-columns: 1fr;
+  }
+  
+  .roi-chart {
+    height: 200px;
+  }
+  
+  /* Navigation Mobile */
+  .slide-navigation {
+    padding: 1rem;
+    gap: 1rem;
+  }
+  
+  .nav-button {
+    padding: 0.75rem;
+  }
+  
+  .nav-button svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .slide-dots {
+    gap: 0.5rem;
+  }
+  
+  .nav-dot {
+    width: 8px;
+    height: 8px;
+  }
+  
+  /* Story Navigation Mobile */
+  .story-navigation {
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+  
+  .story-nav-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+  
+  .chapter-indicators {
+    order: -1;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+  
+  /* Rollout Section Mobile */
+  .rollout-container {
+    padding: 2rem 1rem;
+  }
+  
+  .phase-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .timeline-bar {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .milestone {
+    text-align: center;
+  }
+  
+  .milestone::after {
+    display: none;
+  }
+  
+  .calculator-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Footer Mobile */
+  .site-footer {
+    padding: 2rem 1rem;
+  }
+  
+  /* Navigation Helper Mobile */
+  .nav-helper {
+    bottom: 1rem;
+    right: 1rem;
+    flex-direction: column;
+  }
+  
+  .nav-helper-btn {
+    padding: 0.5rem;
+  }
+  
+  .nav-helper-btn .tooltip {
+    display: none;
+  }
+  
+  /* Hide scroll indicator on mobile */
+  .scroll-indicator {
+    display: none;
+  }
+}
+
+/* Small Mobile Adjustments */
+@media (max-width: 480px) {
+  .overview-title {
+    font-size: 1.75rem;
+  }
+  
+  .story-header h2 {
+    font-size: 1.75rem;
+  }
+  
+  .slide-title {
+    font-size: 1.75rem;
+  }
+  
+  .key-metrics {
+    grid-template-columns: 1fr;
+  }
+  
+  .tech-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .impact-table,
+  .risk-table {
+    font-size: 0.625rem;
+  }
+}
+
+/* Viewport Meta Tag Requirements */
+/* Ensure this is in your HTML head:
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+*/
+
+/* Touch-friendly Adjustments */
+@media (hover: none) and (pointer: coarse) {
+  .nav-button,
+  .story-nav-btn,
+  .view-toggle,
+  .journey-node {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  .nav-dot,
+  .indicator {
+    min-width: 16px;
+    min-height: 16px;
+  }
+}
+
+/* Landscape Mobile */
+@media (max-width: 896px) and (orientation: landscape) {
+  .webdeck-container,
+  .story-container {
+    padding: 1rem;
+  }
+  
+  .slide-header,
+  .story-header {
+    margin-bottom: 1rem;
+  }
+  
+  .slide-content {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+  }
+}

@@ -347,13 +347,19 @@ const totalSlides = 10;
 
 // Make changeSlide global for onclick handlers
 window.changeSlide = function(direction) {
+  console.log('changeSlide called:', direction);
+  
   const slides = document.querySelectorAll('.webdeck-slide');
   const dots = document.querySelectorAll('.nav-dot');
   
+  if (!slides || slides.length === 0) {
+    console.error('No slides found! Check if Deep Dive view is active.');
+    return;
+  }
+  
   // Hide current slide
-  slides[currentSlide - 1].classList.remove('active');
-  if (dots[currentSlide - 1]) {
-    dots[currentSlide - 1].classList.remove('active');
+  if (slides[currentSlide - 1]) {
+    slides[currentSlide - 1].classList.remove('active');
   }
   
   // Calculate new slide
@@ -366,7 +372,10 @@ window.changeSlide = function(direction) {
   }
   
   // Show new slide
-  slides[currentSlide - 1].classList.add('active');
+  if (slides[currentSlide - 1]) {
+    slides[currentSlide - 1].classList.add('active');
+    console.log('Switched to slide:', currentSlide);
+  }
   
   // Update all dot containers
   document.querySelectorAll('.slide-dots').forEach(container => {

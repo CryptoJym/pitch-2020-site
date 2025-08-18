@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Slides</title>
+    <style>
+        body { padding: 20px; font-family: Arial; }
+        button { padding: 10px 20px; margin: 10px; cursor: pointer; }
+        .info { background: #f0f0f0; padding: 20px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <h1>Slide Navigation Test</h1>
+    
+    <div class="info">
+        <p>Open the browser console (F12) to see debug information</p>
+        <button onclick="checkSlideSetup()">Check Slide Setup</button>
+        <button onclick="testChangeSlide()">Test Change Slide</button>
+        <button onclick="window.location.href='/'">Back to Main Site</button>
+    </div>
+    
+    <script>
+        function checkSlideSetup() {
+            console.log('=== Checking Slide Setup ===');
+            console.log('1. Checking if main.js loaded:');
+            console.log('   - window.changeSlide exists:', typeof window.changeSlide);
+            console.log('   - currentSlide:', typeof currentSlide !== 'undefined' ? currentSlide : 'NOT DEFINED');
+            console.log('   - totalSlides:', typeof totalSlides !== 'undefined' ? totalSlides : 'NOT DEFINED');
+            
+            console.log('\n2. Checking DOM elements:');
+            const slides = document.querySelectorAll('.webdeck-slide');
+            console.log('   - Number of .webdeck-slide elements:', slides.length);
+            
+            const dots = document.querySelectorAll('.nav-dot');
+            console.log('   - Number of .nav-dot elements:', dots.length);
+            
+            const activeSlide = document.querySelector('.webdeck-slide.active');
+            console.log('   - Active slide:', activeSlide ? 'Found' : 'NOT FOUND');
+            
+            console.log('\n3. Checking view state:');
+            console.log('   - currentView:', typeof currentView !== 'undefined' ? currentView : 'NOT DEFINED');
+            
+            const detailSection = document.getElementById('detail-section');
+            console.log('   - detail-section exists:', detailSection ? 'YES' : 'NO');
+            console.log('   - detail-section has active class:', detailSection?.classList.contains('active'));
+        }
+        
+        function testChangeSlide() {
+            console.log('=== Testing changeSlide Function ===');
+            if (typeof window.changeSlide === 'function') {
+                console.log('Calling window.changeSlide("next")...');
+                try {
+                    window.changeSlide('next');
+                    console.log('SUCCESS: Function executed without errors');
+                } catch (e) {
+                    console.error('ERROR:', e);
+                }
+            } else {
+                console.error('ERROR: window.changeSlide is not a function');
+                console.log('This means main.js did not load properly');
+            }
+        }
+        
+        // Auto-check on load
+        window.addEventListener('load', () => {
+            console.log('Page loaded. Running automatic check...');
+            setTimeout(checkSlideSetup, 1000);
+        });
+    </script>
+</body>
+</html>

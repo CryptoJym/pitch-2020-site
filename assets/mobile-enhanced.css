@@ -1,0 +1,550 @@
+/* Enhanced Mobile Optimization Styles */
+
+/* Base Mobile Reset and Typography */
+@media (max-width: 768px) {
+  * {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
+  
+  html {
+    font-size: 14px;
+    -webkit-text-size-adjust: 100%;
+  }
+  
+  body {
+    font-size: 1rem;
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  /* Header Mobile Optimization */
+  .site-header {
+    padding: 0.75rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+  }
+  
+  .header-content {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .brand h1 {
+    font-size: 1.25rem;
+    margin: 0;
+  }
+  
+  .view-nav {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.5rem 0;
+  }
+  
+  .view-toggle {
+    flex: 0 0 auto;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+  
+  .view-toggle span {
+    display: inline;
+  }
+  
+  .view-toggle svg {
+    display: none;
+  }
+  
+  /* Overview Mobile */
+  .overview-hero {
+    padding: 1.5rem 1rem;
+  }
+  
+  .overview-title {
+    font-size: 1.75rem;
+    line-height: 1.1;
+    margin-bottom: 0.75rem;
+  }
+  
+  .overview-subtitle {
+    font-size: 0.875rem;
+  }
+  
+  .key-metrics {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin: 1.5rem 0;
+  }
+  
+  .metric-card {
+    padding: 1rem;
+  }
+  
+  .metric-value {
+    font-size: 1.75rem;
+  }
+  
+  .metric-label {
+    font-size: 0.75rem;
+  }
+  
+  /* Journey Path Mobile */
+  .journey-visual {
+    padding: 1rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .journey-path {
+    min-width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .journey-stage {
+    width: 100%;
+  }
+  
+  .journey-node {
+    width: 100%;
+    height: auto;
+    padding: 1rem;
+    margin: 0;
+  }
+  
+  .stage-icon {
+    font-size: 1.5rem;
+  }
+  
+  .stage-label {
+    font-size: 0.875rem;
+  }
+  
+  /* Deep Dive Webdeck Mobile */
+  .webdeck-container {
+    padding: 0;
+    min-height: 100vh;
+  }
+  
+  .webdeck-slide {
+    min-height: 100vh;
+  }
+  
+  .slide-wrapper {
+    padding: 0.75rem;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .slide-header {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .slide-title {
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+  
+  .slide-subtitle {
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+  }
+  
+  .slide-counter {
+    font-size: 0.75rem;
+  }
+  
+  .slide-content {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 1rem 1rem;
+  }
+  
+  /* Slide Navigation Mobile */
+  .slide-navigation {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(10, 10, 15, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    z-index: 100;
+  }
+  
+  .nav-button {
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  .slide-dots {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    max-width: 60%;
+  }
+  
+  .nav-dot {
+    width: 8px;
+    height: 8px;
+    flex-shrink: 0;
+  }
+  
+  /* Slide Content Specifics */
+  .discovery-insights {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .insight-block {
+    padding: 1rem;
+  }
+  
+  .insight-block h4 {
+    font-size: 1rem;
+  }
+  
+  .insight-block ul {
+    font-size: 0.875rem;
+  }
+  
+  .tech-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .tech-card {
+    padding: 0.75rem;
+  }
+  
+  .tech-card h4 {
+    font-size: 0.875rem;
+  }
+  
+  /* Decision Matrix Mobile */
+  .decision-columns {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .decision-column {
+    width: 100%;
+  }
+  
+  .column-header h3 {
+    font-size: 1.25rem;
+  }
+  
+  .decision-item {
+    padding: 0.75rem;
+    font-size: 0.875rem;
+  }
+  
+  .impact-badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+  
+  /* Tables Mobile */
+  .impact-table,
+  .risk-table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    font-size: 0.75rem;
+  }
+  
+  .impact-table table,
+  .risk-table table {
+    min-width: 500px;
+  }
+  
+  .impact-table th,
+  .impact-table td,
+  .risk-table th,
+  .risk-table td {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+  }
+  
+  /* ROI Visualization Mobile */
+  .roi-metrics {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .roi-chart {
+    height: 200px;
+  }
+  
+  .chart-value {
+    font-size: 1.5rem;
+  }
+  
+  /* Story Mode Mobile */
+  .story-container {
+    padding: 1rem;
+  }
+  
+  .story-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .story-intro {
+    font-size: 0.875rem;
+  }
+  
+  .story-chapter {
+    padding: 1.5rem 1rem;
+  }
+  
+  .chapter-marker {
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .chapter-number {
+    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .chapter-label {
+    font-size: 0.75rem;
+  }
+  
+  .chapter-content h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .chapter-content p {
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+  
+  /* Story Navigation Mobile */
+  .story-navigation {
+    position: sticky;
+    bottom: 1rem;
+    background: rgba(10, 10, 15, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 1rem;
+    border-radius: 1rem;
+    margin: 2rem 0;
+  }
+  
+  .story-nav-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  
+  .story-nav-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+  }
+  
+  .chapter-indicators {
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  
+  .indicator {
+    width: 6px;
+    height: 6px;
+  }
+  
+  /* Rollout Section Mobile */
+  .rollout-container {
+    padding: 1rem;
+  }
+  
+  .phase-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .phase-card {
+    padding: 1rem;
+  }
+  
+  .phase-icon {
+    font-size: 2rem;
+  }
+  
+  .phase-title {
+    font-size: 1.25rem;
+  }
+  
+  .phase-timeline {
+    font-size: 0.75rem;
+  }
+  
+  /* Calculator Mobile */
+  .calculator-card {
+    padding: 1rem;
+  }
+  
+  .calculator-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .calc-input label {
+    font-size: 0.875rem;
+  }
+  
+  .calc-input input {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+  
+  .calc-result {
+    padding: 0.75rem;
+  }
+  
+  .result-value {
+    font-size: 1.25rem;
+  }
+  
+  /* Footer Mobile */
+  .site-footer {
+    padding: 1.5rem 1rem;
+    font-size: 0.75rem;
+  }
+  
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  /* Hide desktop-only elements */
+  .desktop-only,
+  .scroll-indicator,
+  .nav-helper {
+    display: none !important;
+  }
+}
+
+/* Small Mobile (iPhone SE, etc.) */
+@media (max-width: 375px) {
+  .overview-title {
+    font-size: 1.5rem;
+  }
+  
+  .slide-title {
+    font-size: 1.25rem;
+  }
+  
+  .key-metrics {
+    grid-template-columns: 1fr;
+  }
+  
+  .metric-value {
+    font-size: 1.5rem;
+  }
+  
+  .view-toggle {
+    font-size: 0.7rem;
+    padding: 0.4rem 0.6rem;
+  }
+}
+
+/* Touch-friendly adjustments */
+@media (hover: none) {
+  /* Increase tap targets */
+  button,
+  .view-toggle,
+  .journey-node,
+  .nav-button,
+  .story-nav-btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Remove hover effects on mobile */
+  .journey-node:hover,
+  .metric-card:hover,
+  .tech-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  
+  /* Add active states */
+  button:active,
+  .view-toggle:active,
+  .journey-node:active {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+}
+
+/* Landscape Mobile */
+@media (max-width: 896px) and (orientation: landscape) {
+  .site-header {
+    position: static;
+  }
+  
+  .slide-wrapper {
+    height: auto;
+    min-height: 100vh;
+  }
+  
+  .slide-content {
+    max-height: calc(100vh - 150px);
+  }
+  
+  .story-chapter {
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+  }
+}
+
+/* Performance optimizations */
+@media (max-width: 768px) {
+  /* Reduce animations on mobile */
+  * {
+    animation-duration: 0.2s !important;
+    transition-duration: 0.2s !important;
+  }
+  
+  /* Optimize scrolling */
+  .slide-content,
+  .story-content,
+  .view-section {
+    will-change: transform;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
