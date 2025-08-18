@@ -46,10 +46,11 @@ function setupViewNavigation() {
     });
   });
   
-  // Journey node clicks
+  // Journey node clicks - navigate to specific sections
   document.querySelectorAll('.journey-node').forEach(node => {
     node.addEventListener('click', () => {
-      switchView('story');
+      const stage = node.getAttribute('data-stage');
+      navigateToSection(stage);
     });
   });
 }
@@ -340,6 +341,269 @@ function setupFinancialCalculator() {
   }
 }
 
+// Webdeck Slide Navigation
+let currentSlide = 1;
+const totalSlides = 10;
+
+// Make changeSlide global for onclick handlers
+window.changeSlide = function(direction) {
+  const slides = document.querySelectorAll('.webdeck-slide');
+  const dots = document.querySelectorAll('.nav-dot');
+  
+  // Hide current slide
+  slides[currentSlide - 1].classList.remove('active');
+  if (dots[currentSlide - 1]) {
+    dots[currentSlide - 1].classList.remove('active');
+  }
+  
+  // Calculate new slide
+  if (direction === 'next') {
+    currentSlide = currentSlide < totalSlides ? currentSlide + 1 : 1;
+  } else if (direction === 'prev') {
+    currentSlide = currentSlide > 1 ? currentSlide - 1 : totalSlides;
+  } else if (typeof direction === 'number') {
+    currentSlide = direction;
+  }
+  
+  // Show new slide
+  slides[currentSlide - 1].classList.add('active');
+  
+  // Update all dot containers
+  document.querySelectorAll('.slide-dots').forEach(container => {
+    const containerDots = container.querySelectorAll('.nav-dot');
+    containerDots.forEach((dot, index) => {
+      if (index === currentSlide - 1) {
+        dot.classList.add('active');
+      } else {
+        dot.classList.remove('active');
+      }
+    });
+  });
+  
+  // Update slide counter
+  document.querySelectorAll('.slide-counter').forEach(counter => {
+    counter.textContent = `${currentSlide} / ${totalSlides}`;
+  });
+  
+  // Animate slide content
+  const newSlide = slides[currentSlide - 1];
+  const slideContent = newSlide.querySelector('.slide-content');
+  slideContent.style.opacity = '0';
+  slideContent.style.transform = 'translateY(20px)';
+  
+  setTimeout(() => {
+    slideContent.style.opacity = '1';
+    slideContent.style.transform = 'translateY(0)';
+  }, 100);
+}
+
+// Setup Webdeck Navigation
+function setupWebdeck() {
+  // Setup dot navigation - populate all slide-dots containers
+  const dotsContainers = document.querySelectorAll('.slide-dots');
+  dotsContainers.forEach(dotsContainer => {
+    for (let i = 1; i <= totalSlides; i++) {
+      const dot = document.createElement('span');
+      dot.className = 'nav-dot';
+      if (i === 1) dot.classList.add('active');
+      dot.onclick = () => window.changeSlide(i);
+      dotsContainer.appendChild(dot);
+    }
+  });
+  
+  // Add keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (currentView === 'detail') {
+      if (e.key === 'ArrowRight') {
+        window.changeSlide('next');
+      } else if (e.key === 'ArrowLeft') {
+        window.changeSlide('prev');
+      }
+    }
+  });
+  
+  // Add swipe support for mobile
+  let touchStartX = 0;
+  let touchEndX = 0;
+  
+  const webdeckContainer = document.querySelector('.webdeck-container');
+  if (webdeckContainer) {
+    webdeckContainer.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+    
+    webdeckContainer.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    });
+  }
+  
+  function handleSwipe() {
+    if (touchEndX < touchStartX - 50) {
+      window.changeSlide('next');
+    } else if (touchEndX > touchStartX + 50) {
+      window.changeSlide('prev');
+    }
+  }
+}
+
+// Navigate to specific section based on journey stage
+function navigateToSection(stage) {
+  // Map stages to views and specific slides
+  const stageMap = {
+    '1': { view: 'detail', slide: 1 },      // Discovery -> Deep Dive slide 1
+    '2': { view: 'detail', slide: 2 },      // MVP Design -> Deep Dive slide 2  
+    '3': { view: 'rollout', section: 'pilot' }, // Pilot Launch -> Rollout pilot section
+    '4': { view: 'rollout', section: 'scale' }, // Scale -> Rollout scale section
+    'discovery': { view: 'detail', slide: 1 },
+    'mvp': { view: 'detail', slide: 2 },
+    'pilot': { view: 'rollout', section: 'pilot' },
+    'scale': { view: 'rollout', section: 'scale' }
+  };
+  
+  const target = stageMap[stage];
+  if (!target) return;
+  
+  // Switch to the target view
+  switchView(target.view);
+  
+  // Navigate to specific slide or section after view switch
+  setTimeout(() => {
+    if (target.slide && target.view === 'detail') {
+      changeSlide(target.slide);
+    } else if (target.section && target.view === 'rollout') {
+      const sectionEl = document.getElementById(target.section + '-section');
+      if (sectionEl) {
+        sectionEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  }, 300);
+}
+
+// Story Mode Navigation
+let currentChapter = 1;
+const totalChapters = 8;
+
+// Make navigateStory global for onclick handlers
+window.navigateStory = function(direction) {
+  const chapters = document.querySelectorAll('.story-chapter');
+  const indicators = document.querySelectorAll('.indicator');
+  const prevBtn = document.getElementById('prevChapter');
+  const nextBtn = document.getElementById('nextChapter');
+  
+  // Hide current chapter
+  chapters[currentChapter - 1].classList.remove('active');
+  indicators[currentChapter - 1].classList.remove('active');
+  
+  // Update chapter number
+  if (direction === 'next' && currentChapter < totalChapters) {
+    currentChapter++;
+  } else if (direction === 'prev' && currentChapter > 1) {
+    currentChapter--;
+  }
+  
+  // Show new chapter
+  chapters[currentChapter - 1].classList.add('active');
+  indicators[currentChapter - 1].classList.add('active');
+  
+  // Animate chapter entrance
+  chapters[currentChapter - 1].style.opacity = '0';
+  chapters[currentChapter - 1].style.transform = 'translateY(20px)';
+  setTimeout(() => {
+    chapters[currentChapter - 1].style.opacity = '1';
+    chapters[currentChapter - 1].style.transform = 'translateY(0)';
+  }, 50);
+  
+  // Update progress bar
+  const progress = (currentChapter / totalChapters) * 100;
+  const storyProgress = document.getElementById('storyProgress');
+  if (storyProgress) {
+    storyProgress.style.width = `${progress}%`;
+  }
+  
+  // Update button states
+  prevBtn.disabled = currentChapter === 1;
+  nextBtn.disabled = currentChapter === totalChapters;
+  
+  // Scroll to top of chapter
+  chapters[currentChapter - 1].scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Initialize story navigation
+function initStoryMode() {
+  // Set up chapter indicators
+  const indicators = document.querySelectorAll('.indicator');
+  indicators.forEach((indicator, index) => {
+    indicator.addEventListener('click', () => {
+      navigateToChapter(index + 1);
+    });
+  });
+  
+  // Set initial state
+  const chapters = document.querySelectorAll('.story-chapter');
+  chapters.forEach((chapter, index) => {
+    if (index === 0) {
+      chapter.classList.add('active');
+      chapter.style.display = 'block';
+    } else {
+      chapter.style.display = 'none';
+    }
+  });
+  
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    const storySection = document.getElementById('story-section');
+    if (storySection && storySection.classList.contains('active')) {
+      if (e.key === 'ArrowRight') {
+        navigateStory('next');
+      } else if (e.key === 'ArrowLeft') {
+        navigateStory('prev');
+      }
+    }
+  });
+}
+
+// Navigate to specific chapter
+function navigateToChapter(chapterNum) {
+  const chapters = document.querySelectorAll('.story-chapter');
+  const indicators = document.querySelectorAll('.indicator');
+  
+  // Hide all chapters
+  chapters.forEach((chapter, index) => {
+    chapter.classList.remove('active');
+    chapter.style.display = 'none';
+    indicators[index].classList.remove('active');
+  });
+  
+  // Show selected chapter
+  currentChapter = chapterNum;
+  chapters[currentChapter - 1].classList.add('active');
+  chapters[currentChapter - 1].style.display = 'block';
+  indicators[currentChapter - 1].classList.add('active');
+  
+  // Update progress
+  const progress = (currentChapter / totalChapters) * 100;
+  const storyProgress = document.getElementById('storyProgress');
+  if (storyProgress) {
+    storyProgress.style.width = `${progress}%`;
+  }
+  
+  // Update button states
+  document.getElementById('prevChapter').disabled = currentChapter === 1;
+  document.getElementById('nextChapter').disabled = currentChapter === totalChapters;
+  
+  // Animate entrance
+  chapters[currentChapter - 1].style.opacity = '0';
+  chapters[currentChapter - 1].style.transform = 'translateY(20px)';
+  setTimeout(() => {
+    chapters[currentChapter - 1].style.opacity = '1';
+    chapters[currentChapter - 1].style.transform = 'translateY(0)';
+  }, 50);
+  
+  // Scroll to top
+  chapters[currentChapter - 1].scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 // Initialize everything
 document.addEventListener('DOMContentLoaded', async () => {
   setupViewNavigation();
@@ -347,6 +611,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   setupProgressBar();
   setupScrollIndicator();
   setupHeaderScroll();
+  setupWebdeck();
+  initStoryMode();
   await loadContent();
 
   // Add loaded class for animations
